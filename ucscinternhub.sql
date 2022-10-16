@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2022 at 11:10 AM
+-- Generation Time: Oct 16, 2022 at 11:20 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -285,6 +285,26 @@ CREATE TABLE `company_visit` (
 
 INSERT INTO `company_visit` (`company_visit_id`, `company_id`, `email_address`, `date`, `start_time`, `company_visit_type`, `status`) VALUES
 (1, 41, 'hhh@g.co', '2022/095', 12, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_visit_status_types`
+--
+
+CREATE TABLE `company_visit_status_types` (
+  `id` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `company_visit_status_types`
+--
+
+INSERT INTO `company_visit_status_types` (`id`, `status`) VALUES
+(1, 'Not visited'),
+(2, 'Visited'),
+(3, 'Cancelled ');
 
 -- --------------------------------------------------------
 
@@ -758,6 +778,12 @@ ALTER TABLE `company_visit`
   ADD KEY `status` (`status`);
 
 --
+-- Indexes for table `company_visit_status_types`
+--
+ALTER TABLE `company_visit_status_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `company_visit_types`
 --
 ALTER TABLE `company_visit_types`
@@ -956,6 +982,12 @@ ALTER TABLE `company_status_types`
 --
 ALTER TABLE `company_visit`
   MODIFY `company_visit_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `company_visit_status_types`
+--
+ALTER TABLE `company_visit_status_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `company_visit_types`
