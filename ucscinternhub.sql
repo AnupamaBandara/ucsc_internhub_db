@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2022 at 08:49 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Oct 16, 2022 at 11:10 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -276,15 +276,15 @@ CREATE TABLE `company_visit` (
   `date` varchar(50) NOT NULL,
   `start_time` int(10) NOT NULL,
   `company_visit_type` int(5) NOT NULL,
-  `visited_type` enum('Yes','No') NOT NULL
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `company_visit`
 --
 
-INSERT INTO `company_visit` (`company_visit_id`, `company_id`, `email_address`, `date`, `start_time`, `company_visit_type`, `visited_type`) VALUES
-(1, 41, 'hhh@g.co', '2022/095', 12, 1, 'Yes');
+INSERT INTO `company_visit` (`company_visit_id`, `company_id`, `email_address`, `date`, `start_time`, `company_visit_type`, `status`) VALUES
+(1, 41, 'hhh@g.co', '2022/095', 12, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -754,7 +754,8 @@ ALTER TABLE `company_visit`
   ADD PRIMARY KEY (`company_visit_id`,`company_id`,`email_address`),
   ADD KEY `company_id` (`company_id`),
   ADD KEY `email_address` (`email_address`),
-  ADD KEY `company_visit_type` (`company_visit_type`);
+  ADD KEY `company_visit_type` (`company_visit_type`),
+  ADD KEY `status` (`status`);
 
 --
 -- Indexes for table `company_visit_types`
@@ -1095,7 +1096,8 @@ ALTER TABLE `company_partners`
 ALTER TABLE `company_visit`
   ADD CONSTRAINT `company_visit_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `company_visit_ibfk_2` FOREIGN KEY (`email_address`) REFERENCES `pdc` (`email_address`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `company_visit_ibfk_3` FOREIGN KEY (`company_visit_type`) REFERENCES `company_visit_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `company_visit_ibfk_3` FOREIGN KEY (`company_visit_type`) REFERENCES `company_visit_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `company_visit_ibfk_4` FOREIGN KEY (`status`) REFERENCES `company_visit_status_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `internships`
