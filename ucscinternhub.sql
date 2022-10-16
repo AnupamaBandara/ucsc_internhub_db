@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2022 at 11:20 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
+-- Generation Time: Oct 16, 2022 at 11:51 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ucscinternhub`
+-- Database: `tempucscs`
 --
 
 -- --------------------------------------------------------
@@ -380,21 +380,35 @@ CREATE TABLE `interview` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `interview_decline_message`
+--
+
+CREATE TABLE `interview_decline_message` (
+  `id` int(11) NOT NULL,
+  `interview_id` int(11) NOT NULL,
+  `message` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `interview_status_types`
 --
 
 CREATE TABLE `interview_status_types` (
   `id` int(5) NOT NULL,
-  `types` varchar(100) NOT NULL
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `interview_status_types`
 --
 
-INSERT INTO `interview_status_types` (`id`, `types`) VALUES
-(1, 'Online'),
-(2, 'Onsite');
+INSERT INTO `interview_status_types` (`id`, `status`) VALUES
+(1, 'Pending response'),
+(2, 'Accepted'),
+(3, 'Declined'),
+(4, 'Canceled');
 
 -- --------------------------------------------------------
 
@@ -816,6 +830,13 @@ ALTER TABLE `interview`
   ADD KEY `interview_status` (`interview_status`);
 
 --
+-- Indexes for table `interview_decline_message`
+--
+ALTER TABLE `interview_decline_message`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `interview_id` (`interview_id`);
+
+--
 -- Indexes for table `interview_status_types`
 --
 ALTER TABLE `interview_status_types`
@@ -1014,10 +1035,16 @@ ALTER TABLE `interview`
   MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `interview_decline_message`
+--
+ALTER TABLE `interview_decline_message`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `interview_status_types`
 --
 ALTER TABLE `interview_status_types`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pdc_role`
@@ -1153,6 +1180,12 @@ ALTER TABLE `interview`
   ADD CONSTRAINT `interview_ibfk_2` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `interview_ibfk_3` FOREIGN KEY (`interview_type`) REFERENCES `company_visit_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `interview_ibfk_4` FOREIGN KEY (`interview_status`) REFERENCES `interview_status_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `interview_decline_message`
+--
+ALTER TABLE `interview_decline_message`
+  ADD CONSTRAINT `interview_decline_message_ibfk_1` FOREIGN KEY (`interview_id`) REFERENCES `interview` (`interview_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pdc`
