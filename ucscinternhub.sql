@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2022 at 10:46 AM
+-- Generation Time: Oct 22, 2022 at 01:51 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -486,22 +486,42 @@ CREATE TABLE `pdc` (
   `last_name` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `profile_picture` varchar(100) DEFAULT NULL,
-  `role` int(5) NOT NULL
+  `role` int(5) NOT NULL,
+  `is_active` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pdc`
 --
 
-INSERT INTO `pdc` (`email_address`, `first_name`, `last_name`, `password`, `profile_picture`, `role`) VALUES
-('coordinator@g.com', 'Saman', 'Rathnapriya', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, 1),
-('fhdghd@gg.com', 'ggfdg', 'fgdf', '$2b$10$uBxkYGsYd.4U8VCh8P1KJeQVorqkEdqUtEHiKzmhQBc1n4TXfvcRa', NULL, 2),
-('hhh@g.co', 'fn', 'sn', '$2b$10$.Dh3/t0jay0a73frH/Z3KuSMOXxumyR3mHwY0J5GZuOZeTNSjqCce', NULL, 2),
-('hhh@g.com', 'fn', 'sn', '$2b$10$DTvUIkVi6v6T5PwEXQFDk.y0P2FCtjSLUHGJp60irPFbw1Wb3aKG6', NULL, 2),
-('jjj@g.co', 'tretr', 'vbvc', '$2b$10$F6o7pv41L7JEXuET.xX1eOGxH3ndNE1LANHuobBsp8DCv/.Yegfvy', NULL, 2),
-('pe@e.com', 'Prmila', 'wasana', '$2b$10$5Zmtq1yIHu1DHp5UYo2aHeVOXi3ljZU2JTH4iOeBNV6cS.JkavSjy', NULL, 2),
-('staff@g.com', 'Amal', 'Rathnapriya', '$2b$10$gi4.tgogNL0aBtZxJFqIEeJrPMVmgiXybm2.FthPUCbw5HnUg7rPq', NULL, 2),
-('support@star-clicks.com', 'nn', 'mm', '$2b$10$cZlN3sEQhAxFBSU6Si/JZugsQtuZl.nyWWX4KOSE71wgoYpzmf2bi', NULL, 2);
+INSERT INTO `pdc` (`email_address`, `first_name`, `last_name`, `password`, `profile_picture`, `role`, `is_active`) VALUES
+('coordinator@g.com', 'Saman', 'Rathnapriya', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, 1, 0),
+('fhdghd@gg.com', 'ggfdg', 'fgdf', '$2b$10$uBxkYGsYd.4U8VCh8P1KJeQVorqkEdqUtEHiKzmhQBc1n4TXfvcRa', NULL, 2, 0),
+('hhh@g.co', 'fn', 'sn', '$2b$10$.Dh3/t0jay0a73frH/Z3KuSMOXxumyR3mHwY0J5GZuOZeTNSjqCce', NULL, 2, 0),
+('hhh@g.com', 'fn', 'sn', '$2b$10$DTvUIkVi6v6T5PwEXQFDk.y0P2FCtjSLUHGJp60irPFbw1Wb3aKG6', NULL, 2, 0),
+('jjj@g.co', 'tretr', 'vbvc', '$2b$10$F6o7pv41L7JEXuET.xX1eOGxH3ndNE1LANHuobBsp8DCv/.Yegfvy', NULL, 2, 0),
+('pe@e.com', 'Prmila', 'wasana', '$2b$10$5Zmtq1yIHu1DHp5UYo2aHeVOXi3ljZU2JTH4iOeBNV6cS.JkavSjy', NULL, 2, 0),
+('staff@g.com', 'Amal', 'Rathnapriya', '$2b$10$gi4.tgogNL0aBtZxJFqIEeJrPMVmgiXybm2.FthPUCbw5HnUg7rPq', NULL, 2, 0),
+('support@star-clicks.com', 'nn', 'mm', '$2b$10$cZlN3sEQhAxFBSU6Si/JZugsQtuZl.nyWWX4KOSE71wgoYpzmf2bi', NULL, 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pdc_member_is_active`
+--
+
+CREATE TABLE `pdc_member_is_active` (
+  `id` int(10) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pdc_member_is_active`
+--
+
+INSERT INTO `pdc_member_is_active` (`id`, `status`) VALUES
+(1, 'inactive'),
+(2, 'active');
 
 -- --------------------------------------------------------
 
@@ -607,7 +627,7 @@ INSERT INTO `student` (`index_number`, `registration_number`, `name`, `password`
 (77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
 (354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '1', NULL, NULL, NULL, NULL, NULL, 1),
 (789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(19000219, '2019cs128', 'Chamath Chinthana', '19000219', NULL, 'chamath@gmail.com', NULL, NULL, NULL, NULL, 0, '', 'I\'m a very good student.', 'https://github.com/Chamath428', 'https://www.linkedin.com/in/chamath-chinthana-9862529a/', 'https://www.facebook.com/chamathj1', NULL, 1),
+(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, NULL, 0, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', NULL, 1),
 (19000855, '2019?cs0', 'dfffssf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '4', NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
@@ -733,7 +753,10 @@ CREATE TABLE `student_status_type` (
 --
 
 INSERT INTO `student_status_type` (`id`, `status`) VALUES
-(1, 'pitching programm');
+(1, 'Pitching Stage - Round 1'),
+(2, 'Pitching Stage - Round 2'),
+(3, 'Pitching Stage - Round 3'),
+(4, 'Selected');
 
 -- --------------------------------------------------------
 
@@ -951,6 +974,12 @@ ALTER TABLE `pdc`
   ADD KEY `role` (`role`);
 
 --
+-- Indexes for table `pdc_member_is_active`
+--
+ALTER TABLE `pdc_member_is_active`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pdc_notification`
 --
 ALTER TABLE `pdc_notification`
@@ -1161,6 +1190,12 @@ ALTER TABLE `job_roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
+-- AUTO_INCREMENT for table `pdc_member_is_active`
+--
+ALTER TABLE `pdc_member_is_active`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `pdc_role`
 --
 ALTER TABLE `pdc_role`
@@ -1194,7 +1229,7 @@ ALTER TABLE `student_reports`
 -- AUTO_INCREMENT for table `student_status_type`
 --
 ALTER TABLE `student_status_type`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `supervisor`
