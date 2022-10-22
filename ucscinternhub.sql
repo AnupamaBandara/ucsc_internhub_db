@@ -1,11 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+
 -- Generation Time: Oct 22, 2022 at 07:53 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 8.0.11
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +20,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `testucsc`
+-- Database: `ucscinternhub`
 --
 
 -- --------------------------------------------------------
@@ -274,7 +276,7 @@ CREATE TABLE `company_visit` (
   `company_id` int(10) NOT NULL,
   `email_address` varchar(100) NOT NULL,
   `date` varchar(50) NOT NULL,
-  `start_time` int(10) NOT NULL,
+  `start_time` varchar(50) NOT NULL,
   `company_visit_type` int(5) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -284,7 +286,7 @@ CREATE TABLE `company_visit` (
 --
 
 INSERT INTO `company_visit` (`company_visit_id`, `company_id`, `email_address`, `date`, `start_time`, `company_visit_type`, `status`) VALUES
-(1, 41, 'hhh@g.co', '2022/095', 12, 1, 1);
+(1, 41, 'hhh@g.co', '2022/095', '12', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -436,6 +438,55 @@ INSERT INTO `interview_status_types` (`id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `job_roles`
+--
+
+CREATE TABLE `job_roles` (
+  `id` int(11) NOT NULL,
+  `job_role` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job_roles`
+--
+
+INSERT INTO `job_roles` (`id`, `job_role`) VALUES
+(1, 'Application Engineer'),
+(2, 'Automation Engineer'),
+(3, 'Business Analyst'),
+(4, 'Cyber Security'),
+(5, 'Data Analyst'),
+(6, 'Database'),
+(7, 'DevOps Engineer'),
+(8, 'Process Transformation and ERP Advisory Services\r\n'),
+(9, 'Game Development'),
+(10, 'Information System Audit / System Implementation'),
+(11, 'IOT'),
+(12, 'Image processing'),
+(13, 'Information Security Engineer'),
+(14, 'IT Operations Engineer /Cloud Operation Engineer'),
+(15, 'Mobile Application Developer'),
+(16, 'Machine learning'),
+(17, 'Network Administrator'),
+(18, 'Project Manager'),
+(19, 'Quality Assurance Engineer'),
+(20, 'Research & Development\r\n'),
+(21, 'Software Engineer'),
+(22, 'Software Engineer _ .NET'),
+(23, 'Software Engineer _ C++/ C'),
+(24, 'Software Engineer - Customer Success'),
+(25, 'Software Engineer _Digital Transformation'),
+(26, 'Software Engineer _ Full Stack'),
+(27, 'Software Engineer _JAVA'),
+(28, 'Support Engineer'),
+(29, 'System Developer / System Engineer'),
+(30, 'UI/UX Engineer / FrontEnd Development'),
+(31, 'Visual Analysis'),
+(32, 'Web Developer');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notification`
 --
 
@@ -460,22 +511,42 @@ CREATE TABLE `pdc` (
   `last_name` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `profile_picture` varchar(100) DEFAULT NULL,
-  `role` int(5) NOT NULL
+  `role` int(5) NOT NULL,
+  `is_active` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pdc`
 --
 
-INSERT INTO `pdc` (`email_address`, `first_name`, `last_name`, `password`, `profile_picture`, `role`) VALUES
-('coordinator@g.com', 'Saman', 'Rathnapriya', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, 1),
-('fhdghd@gg.com', 'ggfdg', 'fgdf', '$2b$10$uBxkYGsYd.4U8VCh8P1KJeQVorqkEdqUtEHiKzmhQBc1n4TXfvcRa', NULL, 2),
-('hhh@g.co', 'fn', 'sn', '$2b$10$.Dh3/t0jay0a73frH/Z3KuSMOXxumyR3mHwY0J5GZuOZeTNSjqCce', NULL, 2),
-('hhh@g.com', 'fn', 'sn', '$2b$10$DTvUIkVi6v6T5PwEXQFDk.y0P2FCtjSLUHGJp60irPFbw1Wb3aKG6', NULL, 2),
-('jjj@g.co', 'tretr', 'vbvc', '$2b$10$F6o7pv41L7JEXuET.xX1eOGxH3ndNE1LANHuobBsp8DCv/.Yegfvy', NULL, 2),
-('pe@e.com', 'Prmila', 'wasana', '$2b$10$5Zmtq1yIHu1DHp5UYo2aHeVOXi3ljZU2JTH4iOeBNV6cS.JkavSjy', NULL, 2),
-('staff@g.com', 'Amal', 'Rathnapriya', '$2b$10$gi4.tgogNL0aBtZxJFqIEeJrPMVmgiXybm2.FthPUCbw5HnUg7rPq', NULL, 2),
-('support@star-clicks.com', 'nn', 'mm', '$2b$10$cZlN3sEQhAxFBSU6Si/JZugsQtuZl.nyWWX4KOSE71wgoYpzmf2bi', NULL, 2);
+INSERT INTO `pdc` (`email_address`, `first_name`, `last_name`, `password`, `profile_picture`, `role`, `is_active`) VALUES
+('coordinator@g.com', 'Saman', 'Rathnapriya', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, 1, 0),
+('fhdghd@gg.com', 'ggfdg', 'fgdf', '$2b$10$uBxkYGsYd.4U8VCh8P1KJeQVorqkEdqUtEHiKzmhQBc1n4TXfvcRa', NULL, 2, 0),
+('hhh@g.co', 'fn', 'sn', '$2b$10$.Dh3/t0jay0a73frH/Z3KuSMOXxumyR3mHwY0J5GZuOZeTNSjqCce', NULL, 2, 0),
+('hhh@g.com', 'fn', 'sn', '$2b$10$DTvUIkVi6v6T5PwEXQFDk.y0P2FCtjSLUHGJp60irPFbw1Wb3aKG6', NULL, 2, 0),
+('jjj@g.co', 'tretr', 'vbvc', '$2b$10$F6o7pv41L7JEXuET.xX1eOGxH3ndNE1LANHuobBsp8DCv/.Yegfvy', NULL, 2, 0),
+('pe@e.com', 'Prmila', 'wasana', '$2b$10$5Zmtq1yIHu1DHp5UYo2aHeVOXi3ljZU2JTH4iOeBNV6cS.JkavSjy', NULL, 2, 0),
+('staff@g.com', 'Amal', 'Rathnapriya', '$2b$10$gi4.tgogNL0aBtZxJFqIEeJrPMVmgiXybm2.FthPUCbw5HnUg7rPq', NULL, 2, 0),
+('support@star-clicks.com', 'nn', 'mm', '$2b$10$cZlN3sEQhAxFBSU6Si/JZugsQtuZl.nyWWX4KOSE71wgoYpzmf2bi', NULL, 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pdc_member_is_active`
+--
+
+CREATE TABLE `pdc_member_is_active` (
+  `id` int(10) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pdc_member_is_active`
+--
+
+INSERT INTO `pdc_member_is_active` (`id`, `status`) VALUES
+(1, 'inactive'),
+(2, 'active');
 
 -- --------------------------------------------------------
 
@@ -570,6 +641,20 @@ CREATE TABLE `student` (
   `program_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`index_number`, `registration_number`, `name`, `password`, `nic`, `email`, `cv`, `intro_video`, `profile_picture`, `student_status`, `degree`, `gpa`, `about_me`, `github`, `linkedin`, `facebook`, `preferred_role`, `program_id`) VALUES
+(1112, '20199xn', 'akqdkqsi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '3', NULL, NULL, NULL, NULL, NULL, 1),
+(11123, '209xn', 'adkqsi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '3', NULL, NULL, NULL, NULL, NULL, 1),
+(66464, 'g46456', 'ghgfh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '1', NULL, NULL, NULL, NULL, NULL, 1),
+(789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, NULL, 0, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', NULL, 1),
+(19000855, '2019?cs0', 'dfffssf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '4', NULL, NULL, NULL, NULL, NULL, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -610,6 +695,27 @@ CREATE TABLE `student_availability` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student_degree`
+--
+
+CREATE TABLE `student_degree` (
+  `id` int(10) NOT NULL,
+  `degree` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student_degree`
+--
+
+INSERT INTO `student_degree` (`id`, `degree`) VALUES
+(1, 'CS - 3rd Year'),
+(2, 'IS - 3rd Year'),
+(3, 'CS - 4th Year'),
+(4, 'IS - 4th Year');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student_notification`
 --
 
@@ -617,6 +723,25 @@ CREATE TABLE `student_notification` (
   `notification_id` int(100) NOT NULL,
   `index_number` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_preferred_job_role`
+--
+
+CREATE TABLE `student_preferred_job_role` (
+  `index_number` int(10) NOT NULL,
+  `job_role` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student_preferred_job_role`
+--
+
+INSERT INTO `student_preferred_job_role` (`index_number`, `job_role`) VALUES
+(19000219, 21),
+(19000219, 27);
 
 -- --------------------------------------------------------
 
@@ -653,7 +778,10 @@ CREATE TABLE `student_status_type` (
 --
 
 INSERT INTO `student_status_type` (`id`, `status`) VALUES
-(1, 'pitching programm');
+(1, 'Pitching Stage - Round 1'),
+(2, 'Pitching Stage - Round 2'),
+(3, 'Pitching Stage - Round 3'),
+(4, 'Selected');
 
 -- --------------------------------------------------------
 
@@ -859,6 +987,12 @@ ALTER TABLE `interview_status_types`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `job_roles`
+--
+ALTER TABLE `job_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
@@ -870,6 +1004,12 @@ ALTER TABLE `notification`
 ALTER TABLE `pdc`
   ADD PRIMARY KEY (`email_address`),
   ADD KEY `role` (`role`);
+
+--
+-- Indexes for table `pdc_member_is_active`
+--
+ALTER TABLE `pdc_member_is_active`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pdc_notification`
@@ -931,11 +1071,24 @@ ALTER TABLE `student_availability`
   ADD PRIMARY KEY (`index_number`);
 
 --
+-- Indexes for table `student_degree`
+--
+ALTER TABLE `student_degree`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `student_notification`
 --
 ALTER TABLE `student_notification`
   ADD PRIMARY KEY (`notification_id`,`index_number`),
   ADD KEY `index_number` (`index_number`);
+
+--
+-- Indexes for table `student_preferred_job_role`
+--
+ALTER TABLE `student_preferred_job_role`
+  ADD PRIMARY KEY (`index_number`,`job_role`),
+  ADD KEY `job_role` (`job_role`);
 
 --
 -- Indexes for table `student_reports`
@@ -1069,6 +1222,18 @@ ALTER TABLE `interview_status_types`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `job_roles`
+--
+ALTER TABLE `job_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `pdc_member_is_active`
+--
+ALTER TABLE `pdc_member_is_active`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `pdc_role`
 --
 ALTER TABLE `pdc_role`
@@ -1087,6 +1252,12 @@ ALTER TABLE `report_type`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `student_degree`
+--
+ALTER TABLE `student_degree`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `student_reports`
 --
 ALTER TABLE `student_reports`
@@ -1096,7 +1267,7 @@ ALTER TABLE `student_reports`
 -- AUTO_INCREMENT for table `student_status_type`
 --
 ALTER TABLE `student_status_type`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `supervisor`
@@ -1261,6 +1432,13 @@ ALTER TABLE `student_availability`
 ALTER TABLE `student_notification`
   ADD CONSTRAINT `student_notification_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_notification_ibfk_2` FOREIGN KEY (`notification_id`) REFERENCES `notification` (`notification_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_preferred_job_role`
+--
+ALTER TABLE `student_preferred_job_role`
+  ADD CONSTRAINT `student_preferred_job_role_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_preferred_job_role_ibfk_2` FOREIGN KEY (`job_role`) REFERENCES `job_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_reports`
