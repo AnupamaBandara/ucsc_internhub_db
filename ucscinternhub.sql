@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2022 at 11:51 AM
+-- Generation Time: Oct 22, 2022 at 07:53 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 8.0.11
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tempucscs`
+-- Database: `testucsc`
 --
 
 -- --------------------------------------------------------
@@ -348,8 +348,11 @@ CREATE TABLE `internships` (
 
 CREATE TABLE `internship_program` (
   `program_id` int(10) NOT NULL,
-  `batch_no` int(10) NOT NULL,
-  `program_year` int(10) NOT NULL,
+  `batch_no` int(10) DEFAULT NULL,
+  `start_date` varchar(50) NOT NULL,
+  `end_date` varchar(50) DEFAULT NULL,
+  `status` int(5) NOT NULL DEFAULT 1,
+  `is_active` int(5) NOT NULL DEFAULT 1,
   `email_address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -357,8 +360,28 @@ CREATE TABLE `internship_program` (
 -- Dumping data for table `internship_program`
 --
 
-INSERT INTO `internship_program` (`program_id`, `batch_no`, `program_year`, `email_address`) VALUES
-(1, 2019, 21099, 'coordinator@g.com');
+INSERT INTO `internship_program` (`program_id`, `batch_no`, `start_date`, `end_date`, `status`, `is_active`, `email_address`) VALUES
+(1, NULL, '2020-1-05', NULL, 1, 1, 'coordinator@g.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `internship_program_status`
+--
+
+CREATE TABLE `internship_program_status` (
+  `id` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `internship_program_status`
+--
+
+INSERT INTO `internship_program_status` (`id`, `type`) VALUES
+(1, '1st Phase'),
+(2, '2nd Phase'),
+(3, '3rd Phase');
 
 -- --------------------------------------------------------
 
@@ -546,20 +569,6 @@ CREATE TABLE `student` (
   `preferred_role` varchar(100) DEFAULT NULL,
   `program_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`index_number`, `registration_number`, `name`, `password`, `nic`, `email`, `cv`, `intro_video`, `profile_picture`, `student_status`, `degree`, `gpa`, `about_me`, `github`, `linkedin`, `facebook`, `preferred_role`, `program_id`) VALUES
-(1112, '20199xn', 'akqdkqsi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, '3', NULL, NULL, NULL, NULL, NULL, 1),
-(11123, '209xn', 'adkqsi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, '3', NULL, NULL, NULL, NULL, NULL, 1),
-(66464, 'g46456', 'ghgfh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1', NULL, NULL, NULL, NULL, NULL, 1),
-(789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(19000219, '2019cs128', 'ddfdfs', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(19000855, '2019?cs0', 'dfffssf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '4', NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -817,7 +826,14 @@ ALTER TABLE `internships`
 --
 ALTER TABLE `internship_program`
   ADD PRIMARY KEY (`program_id`),
-  ADD KEY `email_address` (`email_address`);
+  ADD KEY `email_address` (`email_address`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `internship_program_status`
+--
+ALTER TABLE `internship_program_status`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `interview`
@@ -1029,6 +1045,12 @@ ALTER TABLE `internship_program`
   MODIFY `program_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `internship_program_status`
+--
+ALTER TABLE `internship_program_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `interview`
 --
 ALTER TABLE `interview`
@@ -1170,7 +1192,8 @@ ALTER TABLE `internships`
 -- Constraints for table `internship_program`
 --
 ALTER TABLE `internship_program`
-  ADD CONSTRAINT `internship_program_ibfk_1` FOREIGN KEY (`email_address`) REFERENCES `pdc` (`email_address`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `internship_program_ibfk_1` FOREIGN KEY (`email_address`) REFERENCES `pdc` (`email_address`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `internship_program_ibfk_2` FOREIGN KEY (`status`) REFERENCES `interview_status_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `interview`
