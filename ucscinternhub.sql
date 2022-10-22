@@ -3,9 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2022 at 01:51 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+
+-- Generation Time: Oct 22, 2022 at 07:53 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 8.0.11
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -348,8 +350,11 @@ CREATE TABLE `internships` (
 
 CREATE TABLE `internship_program` (
   `program_id` int(10) NOT NULL,
-  `batch_no` int(10) NOT NULL,
-  `program_year` int(10) NOT NULL,
+  `batch_no` int(10) DEFAULT NULL,
+  `start_date` varchar(50) NOT NULL,
+  `end_date` varchar(50) DEFAULT NULL,
+  `status` int(5) NOT NULL DEFAULT 1,
+  `is_active` int(5) NOT NULL DEFAULT 1,
   `email_address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -357,8 +362,28 @@ CREATE TABLE `internship_program` (
 -- Dumping data for table `internship_program`
 --
 
-INSERT INTO `internship_program` (`program_id`, `batch_no`, `program_year`, `email_address`) VALUES
-(1, 2019, 21099, 'coordinator@g.com');
+INSERT INTO `internship_program` (`program_id`, `batch_no`, `start_date`, `end_date`, `status`, `is_active`, `email_address`) VALUES
+(1, NULL, '2020-1-05', NULL, 1, 1, 'coordinator@g.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `internship_program_status`
+--
+
+CREATE TABLE `internship_program_status` (
+  `id` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `internship_program_status`
+--
+
+INSERT INTO `internship_program_status` (`id`, `type`) VALUES
+(1, '1st Phase'),
+(2, '2nd Phase'),
+(3, '3rd Phase');
 
 -- --------------------------------------------------------
 
@@ -929,7 +954,14 @@ ALTER TABLE `internships`
 --
 ALTER TABLE `internship_program`
   ADD PRIMARY KEY (`program_id`),
-  ADD KEY `email_address` (`email_address`);
+  ADD KEY `email_address` (`email_address`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `internship_program_status`
+--
+ALTER TABLE `internship_program_status`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `interview`
@@ -1166,6 +1198,12 @@ ALTER TABLE `internship_program`
   MODIFY `program_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `internship_program_status`
+--
+ALTER TABLE `internship_program_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `interview`
 --
 ALTER TABLE `interview`
@@ -1325,7 +1363,8 @@ ALTER TABLE `internships`
 -- Constraints for table `internship_program`
 --
 ALTER TABLE `internship_program`
-  ADD CONSTRAINT `internship_program_ibfk_1` FOREIGN KEY (`email_address`) REFERENCES `pdc` (`email_address`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `internship_program_ibfk_1` FOREIGN KEY (`email_address`) REFERENCES `pdc` (`email_address`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `internship_program_ibfk_2` FOREIGN KEY (`status`) REFERENCES `interview_status_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `interview`
