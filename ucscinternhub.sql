@@ -1,13 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-
--- Generation Time: Oct 22, 2022 at 07:53 PM
+-- Generation Time: Oct 23, 2022 at 01:41 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 8.0.11
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,15 +29,46 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `advertisement` (
   `advertisement_id` int(20) NOT NULL,
-  `job_role` varchar(100) NOT NULL,
+  `job_role` int(5) NOT NULL,
   `job_description` varchar(2000) DEFAULT NULL,
   `requested_interns` int(5) DEFAULT NULL,
   `advertisement_picture` varchar(1000) DEFAULT NULL,
   `advertisement_video` varchar(1000) DEFAULT NULL,
   `advertisement_ref_no` varchar(100) DEFAULT NULL,
   `company_id` int(10) NOT NULL,
-  `program_id` int(10) NOT NULL
+  `program_id` int(10) NOT NULL,
+  `status` int(5) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `advertisement`
+--
+
+INSERT INTO `advertisement` (`advertisement_id`, `job_role`, `job_description`, `requested_interns`, `advertisement_picture`, `advertisement_video`, `advertisement_ref_no`, `company_id`, `program_id`, `status`) VALUES
+(9, 21, 'maru job eka', 2, NULL, '', NULL, 39, 1, 1),
+(10, 23, 'mekatmaru', 1, NULL, '', NULL, 39, 1, 1),
+(11, 22, 'maru hode', 2, NULL, '', NULL, 39, 1, 1),
+(12, 32, 'react', 1, NULL, '', NULL, 39, 1, 1),
+(13, 5, 'sdada', 22, NULL, '', NULL, 39, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `advertisement_status`
+--
+
+CREATE TABLE `advertisement_status` (
+  `id` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `advertisement_status`
+--
+
+INSERT INTO `advertisement_status` (`id`, `type`) VALUES
+(1, 'Pending to publish'),
+(2, 'Published');
 
 -- --------------------------------------------------------
 
@@ -51,6 +80,17 @@ CREATE TABLE `advertisement_technologies` (
   `advertisement_id` int(20) NOT NULL,
   `technologies` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `advertisement_technologies`
+--
+
+INSERT INTO `advertisement_technologies` (`advertisement_id`, `technologies`) VALUES
+(9, 'java'),
+(10, 'C++'),
+(11, '.net'),
+(12, 'aa'),
+(13, 'dsada');
 
 -- --------------------------------------------------------
 
@@ -134,7 +174,7 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`company_id`, `name`, `registration_number`, `date_of_establishment`, `description`, `website`, `address`, `fax_no`, `company_status`, `no_of_employees`, `no_of_project_managers`, `no_of_tech_leads`, `is_registered_other_uni`, `password`, `username`, `profile_picture`, `intro_video`) VALUES
-(39, '33etx', 'eextt', '2002/8/5', NULL, 'weeeb.link.com', 'eexaddress', NULL, 1, 300, 22, 21, 1, '$2b$10$GUfNBH379LUUIWL75YVuIuTlUpoDBp.LAjVM45bn8WzT7kjrcG6a.', 'testcompany', NULL, NULL),
+(39, '33etx', 'eextt', '2002/8/5', NULL, 'weeeb.link.com', 'eexaddress', NULL, 1, 300, 22, 21, 1, '$2b$10$GUfNBH379LUUIWL75YVuIuTlUpoDBp.LAjVM45bn8WzT7kjrcG6a.', 'company', NULL, NULL),
 (41, '32yt', 'jjjj', '2002/8/5', NULL, 'weeeb.link.com', 'eexaddress', NULL, 2, 300, 22, 21, 1, '', 'ggg', NULL, NULL),
 (42, '449jj', 'hhk', '2002/8/5', NULL, 'weeeb.link.com', 'eexaddress', NULL, 3, 300, 22, 21, 1, '', 'gkkllew', NULL, NULL),
 (43, '89jff', 'jjjjffdfdf', '2002/8/5', NULL, 'weeeb.link.com', 'eexaddress', NULL, 2, 300, 22, 21, 1, '', 'll', NULL, NULL);
@@ -402,6 +442,15 @@ CREATE TABLE `interview` (
   `interview_status` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `interview`
+--
+
+INSERT INTO `interview` (`interview_id`, `company_id`, `index_number`, `date`, `start_time`, `end_time`, `interview_type`, `interview_status`) VALUES
+(1, 39, 19000219, '2022-10-11', '3.00 pm', '', 1, 3),
+(2, 39, 19000219, '2022-10-05', '12.00 am', '', 2, 1),
+(3, 42, 19000219, '2022-10-20', '10.00 am', '', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -413,6 +462,15 @@ CREATE TABLE `interview_decline_message` (
   `interview_id` int(11) NOT NULL,
   `message` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `interview_decline_message`
+--
+
+INSERT INTO `interview_decline_message` (`id`, `interview_id`, `message`) VALUES
+(1, 1, 'th'),
+(2, 2, ''),
+(3, 1, 'hgh');
 
 -- --------------------------------------------------------
 
@@ -482,7 +540,8 @@ INSERT INTO `job_roles` (`id`, `job_role`) VALUES
 (29, 'System Developer / System Engineer'),
 (30, 'UI/UX Engineer / FrontEnd Development'),
 (31, 'Visual Analysis'),
-(32, 'Web Developer');
+(32, 'Web Developer'),
+(33, 'Other');
 
 -- --------------------------------------------------------
 
@@ -843,7 +902,15 @@ CREATE TABLE `supervisor_notification` (
 ALTER TABLE `advertisement`
   ADD PRIMARY KEY (`advertisement_id`),
   ADD KEY `company_id` (`company_id`),
-  ADD KEY `program_id` (`program_id`);
+  ADD KEY `program_id` (`program_id`),
+  ADD KEY `job_role` (`job_role`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `advertisement_status`
+--
+ALTER TABLE `advertisement_status`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `advertisement_technologies`
@@ -1135,7 +1202,13 @@ ALTER TABLE `supervisor_notification`
 -- AUTO_INCREMENT for table `advertisement`
 --
 ALTER TABLE `advertisement`
-  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `advertisement_status`
+--
+ALTER TABLE `advertisement_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `announcement`
@@ -1207,13 +1280,13 @@ ALTER TABLE `internship_program_status`
 -- AUTO_INCREMENT for table `interview`
 --
 ALTER TABLE `interview`
-  MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `interview_decline_message`
 --
 ALTER TABLE `interview_decline_message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `interview_status_types`
@@ -1225,7 +1298,7 @@ ALTER TABLE `interview_status_types`
 -- AUTO_INCREMENT for table `job_roles`
 --
 ALTER TABLE `job_roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `pdc_member_is_active`
@@ -1284,7 +1357,9 @@ ALTER TABLE `supervisor`
 --
 ALTER TABLE `advertisement`
   ADD CONSTRAINT `advertisement_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `advertisement_ibfk_2` FOREIGN KEY (`program_id`) REFERENCES `internship_program` (`program_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `advertisement_ibfk_2` FOREIGN KEY (`program_id`) REFERENCES `internship_program` (`program_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `advertisement_ibfk_3` FOREIGN KEY (`job_role`) REFERENCES `job_roles` (`id`),
+  ADD CONSTRAINT `advertisement_ibfk_4` FOREIGN KEY (`status`) REFERENCES `advertisement_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `advertisement_technologies`
@@ -1364,7 +1439,7 @@ ALTER TABLE `internships`
 --
 ALTER TABLE `internship_program`
   ADD CONSTRAINT `internship_program_ibfk_1` FOREIGN KEY (`email_address`) REFERENCES `pdc` (`email_address`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `internship_program_ibfk_2` FOREIGN KEY (`status`) REFERENCES `interview_status_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `internship_program_ibfk_2` FOREIGN KEY (`status`) REFERENCES `internship_program_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `interview`
