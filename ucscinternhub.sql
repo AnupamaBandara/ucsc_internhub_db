@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2022 at 01:41 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: Oct 24, 2022 at 08:08 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -375,12 +375,22 @@ INSERT INTO `company_visit_types` (`id`, `type`) VALUES
 
 CREATE TABLE `internships` (
   `internship_id` int(20) NOT NULL,
-  `job_role` varchar(100) NOT NULL,
+  `job_role` int(11) NOT NULL,
   `started_date` varchar(50) NOT NULL,
   `index_number` int(10) NOT NULL,
   `company_id` int(10) NOT NULL,
   `supervisor_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `internships`
+--
+
+INSERT INTO `internships` (`internship_id`, `job_role`, `started_date`, `index_number`, `company_id`, `supervisor_id`) VALUES
+(5, 21, '2022/11/01', 77777, 41, 25),
+(6, 19, '2022/11/01', 1112, 39, 26),
+(7, 3, '2022/11/01', 354335, 41, 21),
+(8, 21, '2022/11/01', 789555, 41, 25);
 
 -- --------------------------------------------------------
 
@@ -705,13 +715,13 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`index_number`, `registration_number`, `name`, `password`, `nic`, `email`, `cv`, `intro_video`, `profile_picture`, `student_status`, `degree`, `gpa`, `about_me`, `github`, `linkedin`, `facebook`, `preferred_role`, `program_id`) VALUES
-(1112, '20199xn', 'akqdkqsi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '3', NULL, NULL, NULL, NULL, NULL, 1),
-(11123, '209xn', 'adkqsi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '3', NULL, NULL, NULL, NULL, NULL, 1),
-(66464, 'g46456', 'ghgfh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '1', NULL, NULL, NULL, NULL, NULL, 1),
-(789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, NULL, 0, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', NULL, 1),
+(1112, '20199xn', 'akqdkqsi', NULL, NULL, NULL, NULL, NULL, NULL, 4, 1, '3', NULL, NULL, NULL, NULL, NULL, 1),
+(11123, '209xn', 'adkqsi', NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, '3', NULL, NULL, NULL, NULL, NULL, 1),
+(66464, 'g46456', 'ghgfh', NULL, NULL, NULL, NULL, NULL, NULL, 1, 3, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, 4, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, 4, 2, '1', NULL, NULL, NULL, NULL, NULL, 1),
+(789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, 4, 3, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, 2, 1, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', '', NULL, 1),
 (19000855, '2019?cs0', 'dfffssf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '4', NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
@@ -734,7 +744,8 @@ CREATE TABLE `student_academic_qualifications` (
 CREATE TABLE `student_applied_internships` (
   `index_number` int(10) NOT NULL,
   `advertisement_id` int(20) NOT NULL,
-  `is_wish_list` int(2) NOT NULL
+  `is_wish_list` int(2) NOT NULL,
+  `cv` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -1014,7 +1025,8 @@ ALTER TABLE `internships`
   ADD PRIMARY KEY (`internship_id`),
   ADD KEY `index_number` (`index_number`),
   ADD KEY `company_id` (`company_id`),
-  ADD KEY `supervisor_id` (`supervisor_id`);
+  ADD KEY `supervisor_id` (`supervisor_id`),
+  ADD KEY `job_role` (`job_role`);
 
 --
 -- Indexes for table `internship_program`
@@ -1262,7 +1274,7 @@ ALTER TABLE `company_visit_types`
 -- AUTO_INCREMENT for table `internships`
 --
 ALTER TABLE `internships`
-  MODIFY `internship_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `internship_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `internship_program`
@@ -1432,7 +1444,8 @@ ALTER TABLE `company_visit`
 ALTER TABLE `internships`
   ADD CONSTRAINT `internships_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `internships_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `internships_ibfk_3` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisor` (`supervisor_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `internships_ibfk_3` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisor` (`supervisor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `internships_ibfk_4` FOREIGN KEY (`job_role`) REFERENCES `job_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `internship_program`
