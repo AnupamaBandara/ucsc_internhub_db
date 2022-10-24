@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2022 at 08:08 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
+-- Generation Time: Oct 24, 2022 at 02:57 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `advertisement` (
   `advertisement_id` int(20) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `job_role` int(5) NOT NULL,
   `job_description` varchar(2000) DEFAULT NULL,
   `requested_interns` int(5) DEFAULT NULL,
@@ -44,12 +45,10 @@ CREATE TABLE `advertisement` (
 -- Dumping data for table `advertisement`
 --
 
-INSERT INTO `advertisement` (`advertisement_id`, `job_role`, `job_description`, `requested_interns`, `advertisement_picture`, `advertisement_video`, `advertisement_ref_no`, `company_id`, `program_id`, `status`) VALUES
-(9, 21, 'maru job eka', 2, NULL, '', NULL, 39, 1, 1),
-(10, 23, 'mekatmaru', 1, NULL, '', NULL, 39, 1, 1),
-(11, 22, 'maru hode', 2, NULL, '', NULL, 39, 1, 1),
-(12, 32, 'react', 1, NULL, '', NULL, 39, 1, 1),
-(13, 5, 'sdada', 22, NULL, '', NULL, 39, 1, 1);
+INSERT INTO `advertisement` (`advertisement_id`, `title`, `job_role`, `job_description`, `requested_interns`, `advertisement_picture`, `advertisement_video`, `advertisement_ref_no`, `company_id`, `program_id`, `status`) VALUES
+(14, 'First  add', 1, 'Descriptio 1', 1, NULL, '', NULL, 39, 1, 1),
+(15, 'Second Add', 22, 'Description 2', 2, NULL, '', NULL, 39, 1, 1),
+(16, 'Third Add', 16, 'Machine le', 1, NULL, '', NULL, 39, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -86,11 +85,9 @@ CREATE TABLE `advertisement_technologies` (
 --
 
 INSERT INTO `advertisement_technologies` (`advertisement_id`, `technologies`) VALUES
-(9, 'java'),
-(10, 'C++'),
-(11, '.net'),
-(12, 'aa'),
-(13, 'dsada');
+(14, 'C++'),
+(15, '.Net'),
+(16, 'ML');
 
 -- --------------------------------------------------------
 
@@ -375,22 +372,12 @@ INSERT INTO `company_visit_types` (`id`, `type`) VALUES
 
 CREATE TABLE `internships` (
   `internship_id` int(20) NOT NULL,
-  `job_role` int(11) NOT NULL,
+  `job_role` int(5) NOT NULL,
   `started_date` varchar(50) NOT NULL,
   `index_number` int(10) NOT NULL,
   `company_id` int(10) NOT NULL,
   `supervisor_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `internships`
---
-
-INSERT INTO `internships` (`internship_id`, `job_role`, `started_date`, `index_number`, `company_id`, `supervisor_id`) VALUES
-(5, 21, '2022/11/01', 77777, 41, 25),
-(6, 19, '2022/11/01', 1112, 39, 26),
-(7, 3, '2022/11/01', 354335, 41, 21),
-(8, 21, '2022/11/01', 789555, 41, 25);
 
 -- --------------------------------------------------------
 
@@ -445,21 +432,22 @@ CREATE TABLE `interview` (
   `interview_id` int(100) NOT NULL,
   `company_id` int(10) NOT NULL,
   `index_number` int(10) NOT NULL,
-  `date` varchar(30) NOT NULL,
-  `start_time` varchar(20) NOT NULL,
-  `end_time` varchar(20) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `start_time` varchar(50) NOT NULL,
+  `end_time` varchar(20) DEFAULT NULL,
   `interview_type` int(5) NOT NULL,
-  `interview_status` int(5) NOT NULL
+  `interview_status` int(5) DEFAULT 1,
+  `advertiesment_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `interview`
 --
 
-INSERT INTO `interview` (`interview_id`, `company_id`, `index_number`, `date`, `start_time`, `end_time`, `interview_type`, `interview_status`) VALUES
-(1, 39, 19000219, '2022-10-11', '3.00 pm', '', 1, 3),
-(2, 39, 19000219, '2022-10-05', '12.00 am', '', 2, 1),
-(3, 42, 19000219, '2022-10-20', '10.00 am', '', 1, 1);
+INSERT INTO `interview` (`interview_id`, `company_id`, `index_number`, `date`, `start_time`, `end_time`, `interview_type`, `interview_status`, `advertiesment_id`) VALUES
+(11, 39, 354335, '2022-10-24', '2022-10-24T12:40:44.772Z', NULL, 2, 1, NULL),
+(12, 39, 19000219, '2022-10-24', '2022-10-24T12:40:57.009Z', NULL, 2, 1, NULL),
+(13, 39, 354335, '2022-10-21', '2022-10-24T12:41:51.224Z', NULL, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -472,15 +460,6 @@ CREATE TABLE `interview_decline_message` (
   `interview_id` int(11) NOT NULL,
   `message` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `interview_decline_message`
---
-
-INSERT INTO `interview_decline_message` (`id`, `interview_id`, `message`) VALUES
-(1, 1, 'th'),
-(2, 2, ''),
-(3, 1, 'hgh');
 
 -- --------------------------------------------------------
 
@@ -501,7 +480,8 @@ INSERT INTO `interview_status_types` (`id`, `status`) VALUES
 (1, 'Pending response'),
 (2, 'Accepted'),
 (3, 'Declined'),
-(4, 'Canceled');
+(4, 'Canceled'),
+(5, 'Done');
 
 -- --------------------------------------------------------
 
@@ -699,7 +679,7 @@ CREATE TABLE `student` (
   `cv` varchar(100) DEFAULT NULL,
   `intro_video` varchar(100) DEFAULT NULL,
   `profile_picture` varchar(100) DEFAULT NULL,
-  `student_status` int(5) DEFAULT NULL,
+  `student_status` int(5) DEFAULT 1,
   `degree` int(5) NOT NULL,
   `gpa` varchar(10) NOT NULL,
   `about_me` varchar(1000) DEFAULT NULL,
@@ -715,14 +695,10 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`index_number`, `registration_number`, `name`, `password`, `nic`, `email`, `cv`, `intro_video`, `profile_picture`, `student_status`, `degree`, `gpa`, `about_me`, `github`, `linkedin`, `facebook`, `preferred_role`, `program_id`) VALUES
-(1112, '20199xn', 'akqdkqsi', NULL, NULL, NULL, NULL, NULL, NULL, 4, 1, '3', NULL, NULL, NULL, NULL, NULL, 1),
-(11123, '209xn', 'adkqsi', NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, '3', NULL, NULL, NULL, NULL, NULL, 1),
-(66464, 'g46456', 'ghgfh', NULL, NULL, NULL, NULL, NULL, NULL, 1, 3, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, 4, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, 4, 2, '1', NULL, NULL, NULL, NULL, NULL, 1),
-(789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, 4, 3, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, 2, 1, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', '', NULL, 1),
-(19000855, '2019?cs0', 'dfffssf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '4', NULL, NULL, NULL, NULL, NULL, 1);
+(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1', NULL, NULL, NULL, NULL, NULL, 1),
+(789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, 1, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, 1, 1, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -744,9 +720,18 @@ CREATE TABLE `student_academic_qualifications` (
 CREATE TABLE `student_applied_internships` (
   `index_number` int(10) NOT NULL,
   `advertisement_id` int(20) NOT NULL,
-  `is_wish_list` int(2) NOT NULL,
-  `cv` varchar(100) NOT NULL
+  `is_wish_list` int(2) NOT NULL DEFAULT 0,
+  `company_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student_applied_internships`
+--
+
+INSERT INTO `student_applied_internships` (`index_number`, `advertisement_id`, `is_wish_list`, `company_id`) VALUES
+(354335, 16, 0, 39),
+(789555, 15, 0, 39),
+(19000219, 14, 0, 39);
 
 -- --------------------------------------------------------
 
@@ -1047,10 +1032,12 @@ ALTER TABLE `internship_program_status`
 --
 ALTER TABLE `interview`
   ADD PRIMARY KEY (`interview_id`,`company_id`,`index_number`),
+  ADD UNIQUE KEY `interview_id` (`interview_id`),
   ADD KEY `company_id` (`company_id`),
   ADD KEY `index_number` (`index_number`),
   ADD KEY `interview_type` (`interview_type`),
-  ADD KEY `interview_status` (`interview_status`);
+  ADD KEY `interview_status` (`interview_status`),
+  ADD KEY `advertiesment_id` (`advertiesment_id`);
 
 --
 -- Indexes for table `interview_decline_message`
@@ -1108,6 +1095,7 @@ ALTER TABLE `pdc_role`
 --
 ALTER TABLE `report_handle`
   ADD PRIMARY KEY (`report_id`,`email_address`),
+  ADD UNIQUE KEY `report_id` (`report_id`),
   ADD KEY `email_address` (`email_address`);
 
 --
@@ -1128,7 +1116,8 @@ ALTER TABLE `report_type`
 ALTER TABLE `student`
   ADD PRIMARY KEY (`index_number`),
   ADD KEY `program_id` (`program_id`),
-  ADD KEY `student_status` (`student_status`);
+  ADD KEY `student_status` (`student_status`),
+  ADD KEY `degree` (`degree`);
 
 --
 -- Indexes for table `student_academic_qualifications`
@@ -1141,7 +1130,8 @@ ALTER TABLE `student_academic_qualifications`
 --
 ALTER TABLE `student_applied_internships`
   ADD PRIMARY KEY (`index_number`,`advertisement_id`),
-  ADD KEY `advertisement_id` (`advertisement_id`);
+  ADD KEY `advertisement_id` (`advertisement_id`),
+  ADD KEY `company_id` (`company_id`);
 
 --
 -- Indexes for table `student_availability`
@@ -1214,7 +1204,7 @@ ALTER TABLE `supervisor_notification`
 -- AUTO_INCREMENT for table `advertisement`
 --
 ALTER TABLE `advertisement`
-  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `advertisement_status`
@@ -1274,7 +1264,7 @@ ALTER TABLE `company_visit_types`
 -- AUTO_INCREMENT for table `internships`
 --
 ALTER TABLE `internships`
-  MODIFY `internship_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `internship_id` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `internship_program`
@@ -1292,7 +1282,7 @@ ALTER TABLE `internship_program_status`
 -- AUTO_INCREMENT for table `interview`
 --
 ALTER TABLE `interview`
-  MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `interview_decline_message`
@@ -1304,7 +1294,7 @@ ALTER TABLE `interview_decline_message`
 -- AUTO_INCREMENT for table `interview_status_types`
 --
 ALTER TABLE `interview_status_types`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `job_roles`
@@ -1445,7 +1435,7 @@ ALTER TABLE `internships`
   ADD CONSTRAINT `internships_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `internships_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `internships_ibfk_3` FOREIGN KEY (`supervisor_id`) REFERENCES `supervisor` (`supervisor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `internships_ibfk_4` FOREIGN KEY (`job_role`) REFERENCES `job_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `internships_ibfk_4` FOREIGN KEY (`job_role`) REFERENCES `job_roles` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `internship_program`
@@ -1461,7 +1451,8 @@ ALTER TABLE `interview`
   ADD CONSTRAINT `interview_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `interview_ibfk_2` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `interview_ibfk_3` FOREIGN KEY (`interview_type`) REFERENCES `company_visit_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `interview_ibfk_4` FOREIGN KEY (`interview_status`) REFERENCES `interview_status_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `interview_ibfk_4` FOREIGN KEY (`interview_status`) REFERENCES `interview_status_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `interview_ibfk_5` FOREIGN KEY (`advertiesment_id`) REFERENCES `advertisement` (`advertisement_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `interview_decline_message`
@@ -1493,7 +1484,9 @@ ALTER TABLE `report_handle`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`program_id`) REFERENCES `internship_program` (`program_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`student_status`) REFERENCES `student_status_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`student_status`) REFERENCES `student_status_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_ibfk_3` FOREIGN KEY (`student_status`) REFERENCES `student_status_type` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_ibfk_4` FOREIGN KEY (`degree`) REFERENCES `student_degree` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_academic_qualifications`
@@ -1506,7 +1499,8 @@ ALTER TABLE `student_academic_qualifications`
 --
 ALTER TABLE `student_applied_internships`
   ADD CONSTRAINT `student_applied_internships_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_applied_internships_ibfk_2` FOREIGN KEY (`advertisement_id`) REFERENCES `advertisement` (`advertisement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_applied_internships_ibfk_2` FOREIGN KEY (`advertisement_id`) REFERENCES `advertisement` (`advertisement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_applied_internships_ibfk_3` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_availability`
