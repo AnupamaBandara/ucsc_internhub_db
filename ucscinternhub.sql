@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2022 at 02:51 AM
+-- Generation Time: Oct 26, 2022 at 01:31 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -48,8 +48,9 @@ CREATE TABLE `advertisement` (
 INSERT INTO `advertisement` (`advertisement_id`, `title`, `job_role`, `job_description`, `requested_interns`, `advertisement_picture`, `advertisement_video`, `advertisement_ref_no`, `company_id`, `program_id`, `status`) VALUES
 (14, 'First  add', 1, 'Descriptio 1', 1, NULL, '', NULL, 39, 1, 2),
 (15, 'Second Add', 22, 'Description 2', 2, NULL, '', NULL, 39, 1, 2),
-(16, 'Third Add', 16, 'Machine le', 1, NULL, '', NULL, 39, 1, 1),
-(17, 'Fourth Add', 15, 'Mobile Applications development are main focus here', 32, NULL, '', NULL, 39, 1, 1);
+(16, 'Third Add', 16, 'Machine le', 1, NULL, '', NULL, 39, 1, 2),
+(17, 'Fourth Add', 15, 'Mobile Applications development are main focus here', 32, NULL, '', NULL, 39, 1, 2),
+(18, 'Fifth Add', 5, 'Data analyst is a treading job role for the today industry', 3, NULL, '', NULL, 39, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,8 @@ INSERT INTO `advertisement_technologies` (`advertisement_id`, `technologies`) VA
 (14, 'C++'),
 (15, '.Net'),
 (16, 'ML'),
-(17, 'Flutter, Dart');
+(17, 'Flutter, Dart'),
+(18, 'Python, Scala');
 
 -- --------------------------------------------------------
 
@@ -448,8 +450,9 @@ CREATE TABLE `interview` (
 
 INSERT INTO `interview` (`interview_id`, `company_id`, `index_number`, `date`, `start_time`, `end_time`, `interview_type`, `interview_status`, `advertiesment_id`) VALUES
 (11, 39, 354335, '2022-10-24', '2022-10-24T12:40:44.772Z', NULL, 2, 1, NULL),
-(12, 39, 19000219, '2022-10-24', '2022-10-24T12:40:57.009Z', NULL, 2, 1, NULL),
-(13, 39, 354335, '2022-10-21', '2022-10-24T12:41:51.224Z', NULL, 1, 1, NULL);
+(12, 39, 19000219, '2022-10-24', '2022-10-24T12:40:57.009Z', NULL, 2, 5, NULL),
+(13, 39, 354335, '2022-10-21', '2022-10-24T12:41:51.224Z', NULL, 1, 1, NULL),
+(14, 39, 19000219, '2022-10-28', '09:00', NULL, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -697,10 +700,10 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`index_number`, `registration_number`, `name`, `password`, `nic`, `email`, `cv`, `intro_video`, `profile_picture`, `student_status`, `degree`, `gpa`, `about_me`, `github`, `linkedin`, `facebook`, `preferred_role`, `program_id`) VALUES
-(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1', NULL, NULL, NULL, NULL, NULL, 1),
+(77777, '43rfewf23', 'ghgf', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
+(354335, '20255cc', 'R.U.B.Rube', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, '1', NULL, NULL, NULL, NULL, NULL, 1),
 (789555, '2019dd699', 'pp.sin', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, NULL, NULL, NULL, NULL, 1, 1, '2', NULL, NULL, NULL, NULL, NULL, 1),
-(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$6FsTA00eq.56RzxuznrB5OY3/V9AKqgI583le/9BCrXKXeyaqgsEi', NULL, 'Chamath@gmail.com', NULL, NULL, NULL, 1, 1, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', NULL, 1);
+(19000219, '2019cs128', 'Chamath Madhushanka', '$2b$10$zXlTqFamI4RRI3HTIlM4l.AOeNy3zRPRZVcSJnKrjZKtfQs1JH/T.', NULL, 'Chamatdqw1h@gmail.com', NULL, 'dcba7367-fcd0-4fa2-a4ab-d0002ede5a79-2022-07-30-12-49-07.mkv', '910475aa-2322-4e69-95a5-d9de6a2dd32a-gantt-chart-project2.png', 4, 1, '', 'dhfladjhfasdf', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', 'https://mail.google.com/mail/u/0/?ogbl#inbox', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -734,7 +737,10 @@ CREATE TABLE `student_applied_internships` (
 INSERT INTO `student_applied_internships` (`index_number`, `advertisement_id`, `cv`, `is_wish_list`, `company_id`) VALUES
 (354335, 16, '', 0, 39),
 (789555, 15, '', 0, 39),
-(19000219, 14, '', 0, 39);
+(19000219, 14, '', 0, 39),
+(19000219, 15, '60bea38b-f119-4c1e-8cd9-e9c89d7a6309-student-year-registration---payment-voucher.pdf', 0, 39),
+(19000219, 16, '06358474-ecbb-4abd-b6cc-d66a7a7d5630-undergraduate-lecture-time-table---1st-sem.---2022-edited-on-02.06.2022_friday-free.pdf', 0, 39),
+(19000219, 17, '9d9e83e7-48c1-48cc-9e4b-21e287069c03-ug_payment-voucher_transcript.pdf', 0, 39);
 
 -- --------------------------------------------------------
 
@@ -790,16 +796,19 @@ CREATE TABLE `student_notification` (
 
 CREATE TABLE `student_preferred_job_role` (
   `index_number` int(10) NOT NULL,
-  `job_role` int(11) NOT NULL
+  `prefer_no1` int(11) NOT NULL,
+  `prefer_no2` int(11) NOT NULL,
+  `prefer_no3` int(11) NOT NULL,
+  `prefer_no4` int(11) NOT NULL,
+  `prefer_no5` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_preferred_job_role`
 --
 
-INSERT INTO `student_preferred_job_role` (`index_number`, `job_role`) VALUES
-(19000219, 21),
-(19000219, 27);
+INSERT INTO `student_preferred_job_role` (`index_number`, `prefer_no1`, `prefer_no2`, `prefer_no3`, `prefer_no4`, `prefer_no5`) VALUES
+(19000219, 10, 18, 14, 15, 6);
 
 -- --------------------------------------------------------
 
@@ -1159,8 +1168,7 @@ ALTER TABLE `student_notification`
 -- Indexes for table `student_preferred_job_role`
 --
 ALTER TABLE `student_preferred_job_role`
-  ADD PRIMARY KEY (`index_number`,`job_role`),
-  ADD KEY `job_role` (`job_role`);
+  ADD PRIMARY KEY (`index_number`) USING BTREE;
 
 --
 -- Indexes for table `student_reports`
@@ -1207,7 +1215,7 @@ ALTER TABLE `supervisor_notification`
 -- AUTO_INCREMENT for table `advertisement`
 --
 ALTER TABLE `advertisement`
-  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `advertisement_status`
@@ -1285,7 +1293,7 @@ ALTER TABLE `internship_program_status`
 -- AUTO_INCREMENT for table `interview`
 --
 ALTER TABLE `interview`
-  MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `interview_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `interview_decline_message`
@@ -1522,8 +1530,7 @@ ALTER TABLE `student_notification`
 -- Constraints for table `student_preferred_job_role`
 --
 ALTER TABLE `student_preferred_job_role`
-  ADD CONSTRAINT `student_preferred_job_role_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_preferred_job_role_ibfk_2` FOREIGN KEY (`job_role`) REFERENCES `job_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_preferred_job_role_ibfk_1` FOREIGN KEY (`index_number`) REFERENCES `student` (`index_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_reports`
