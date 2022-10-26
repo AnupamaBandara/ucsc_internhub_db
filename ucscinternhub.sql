@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2022 at 02:57 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: Oct 26, 2022 at 02:51 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,9 +46,10 @@ CREATE TABLE `advertisement` (
 --
 
 INSERT INTO `advertisement` (`advertisement_id`, `title`, `job_role`, `job_description`, `requested_interns`, `advertisement_picture`, `advertisement_video`, `advertisement_ref_no`, `company_id`, `program_id`, `status`) VALUES
-(14, 'First  add', 1, 'Descriptio 1', 1, NULL, '', NULL, 39, 1, 1),
-(15, 'Second Add', 22, 'Description 2', 2, NULL, '', NULL, 39, 1, 1),
-(16, 'Third Add', 16, 'Machine le', 1, NULL, '', NULL, 39, 1, 1);
+(14, 'First  add', 1, 'Descriptio 1', 1, NULL, '', NULL, 39, 1, 2),
+(15, 'Second Add', 22, 'Description 2', 2, NULL, '', NULL, 39, 1, 2),
+(16, 'Third Add', 16, 'Machine le', 1, NULL, '', NULL, 39, 1, 1),
+(17, 'Fourth Add', 15, 'Mobile Applications development are main focus here', 32, NULL, '', NULL, 39, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -87,7 +88,8 @@ CREATE TABLE `advertisement_technologies` (
 INSERT INTO `advertisement_technologies` (`advertisement_id`, `technologies`) VALUES
 (14, 'C++'),
 (15, '.Net'),
-(16, 'ML');
+(16, 'ML'),
+(17, 'Flutter, Dart');
 
 -- --------------------------------------------------------
 
@@ -720,6 +722,7 @@ CREATE TABLE `student_academic_qualifications` (
 CREATE TABLE `student_applied_internships` (
   `index_number` int(10) NOT NULL,
   `advertisement_id` int(20) NOT NULL,
+  `cv` varchar(200) NOT NULL,
   `is_wish_list` int(2) NOT NULL DEFAULT 0,
   `company_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -728,10 +731,10 @@ CREATE TABLE `student_applied_internships` (
 -- Dumping data for table `student_applied_internships`
 --
 
-INSERT INTO `student_applied_internships` (`index_number`, `advertisement_id`, `is_wish_list`, `company_id`) VALUES
-(354335, 16, 0, 39),
-(789555, 15, 0, 39),
-(19000219, 14, 0, 39);
+INSERT INTO `student_applied_internships` (`index_number`, `advertisement_id`, `cv`, `is_wish_list`, `company_id`) VALUES
+(354335, 16, '', 0, 39),
+(789555, 15, '', 0, 39),
+(19000219, 14, '', 0, 39);
 
 -- --------------------------------------------------------
 
@@ -1204,7 +1207,7 @@ ALTER TABLE `supervisor_notification`
 -- AUTO_INCREMENT for table `advertisement`
 --
 ALTER TABLE `advertisement`
-  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `advertisement_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `advertisement_status`
